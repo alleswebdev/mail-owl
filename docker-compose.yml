@@ -1,0 +1,34 @@
+version: "3.5"
+
+volumes:
+  pg:
+
+services:
+  database:
+    ports:
+      - 5432:5432
+    image: postgres:10
+    volumes:
+      - "./build/postgres/dbinit:/docker-entrypoint-initdb.d:ro,z"
+      - "./build/postgres/postgresql.conf:/usr/share/postgresql/postgresql.conf.sample:ro,z"
+      - "pg:/pg/data:rw,z"
+    environment:
+      POSTGRES_PASSWORD: password
+      PGDATA: "/pg/data"
+    command: ["postgres", "-c", "logging_collector=on", "-c", "log_directory=/var/log/postgresql", "-c", "log_filename=postgresql.log", "-c", "log_statement=all"]
+
+  rabbit:
+    build: ./build/rabbitmq
+    ports:
+      - 8083:15672
+      - 5672:5672
+    environment:
+      RABBITMQ_DEFAULT_USER: "rabbit"
+      RABBITMQ_DEFAULT_PASS: "rabbit"
+
+  redis:
+    ports:
+      - 6379:6379
+    image: redis:5
+    command: redis-server --requirepass redis
+
