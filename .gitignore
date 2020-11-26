@@ -1,0 +1,8 @@
+.env
+main
+.vscode
+.idea
+.directory
+*.log
+migrate
+worker
