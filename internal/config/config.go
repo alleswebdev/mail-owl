@@ -17,13 +17,10 @@ type Config struct {
 	DbName             string `mapstructure:"DB_NAME"`
 	DbUser             string `mapstructure:"DB_USER"`
 	DbPassword         string `mapstructure:"DB_PASSWORD"`
-	SwiftAuthUrl       string `mapstructure:"SWIFT_AUTH_URL"`
-	SwiftUsername      string `mapstructure:"SWIFT_USERNAME"`
-	SwiftPassword      string `mapstructure:"SWIFT_PASSWORD"`
-	SwiftContainer     string `mapstructure:"SWIFT_CONTAINER"`
-	SwiftPrefix        string `mapstructure:"SWIFT_PREFIX"`
-	SwiftTempUrlKey    string `mapstructure:"SWIFT_TEMP_URL_KEY"`
-	SwiftPubContainer  string `mapstructure:"SWIFT_PUB_CONTAINER"`
+	RabbitUser         string `mapstructure:"RABBIT_USER"`
+	RabbitPassword     string `mapstructure:"RABBIT_PASSWORD"`
+	RabbitHost         string `mapstructure:"RABBIT_HOST"`
+	RabbitPort         string `mapstructure:"RABBIT_PORT"`
 }
 
 func LoadConfig(paths ...string) *Config {
