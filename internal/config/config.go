@@ -7,11 +7,9 @@ import (
 )
 
 type Config struct {
-	AppPort            int    `mapstructure:"APP_PORT"`
 	AppName            string `mapstructure:"APP_NAME"`
 	AppEnv             string `mapstructure:"APP_ENV"`
 	AppLogPath         string `mapstructure:"APP_LOG_PATH"`
-	AppSendAttachments bool   `mapstructure:"APP_SEND_ATTACHMENTS"`
 	DbHost             string `mapstructure:"DB_HOST"`
 	DbPort             string `mapstructure:"DB_PORT"`
 	DbName             string `mapstructure:"DB_NAME"`
