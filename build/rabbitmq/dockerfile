@@ -1,4 +1,4 @@
-FROM rabbitmq:latest as main
+FROM rabbitmq:3-management as main
 
 RUN rabbitmq-plugins enable --offline \
   rabbitmq_management

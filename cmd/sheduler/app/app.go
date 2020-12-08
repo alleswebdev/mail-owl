@@ -11,7 +11,6 @@ import (
 	"github.com/jackc/pgx/v4/log/zapadapter"
 	"github.com/jackc/pgx/v4/pgxpool"
 	"go.uber.org/zap"
-	"strings"
 	"time"
 )
 
@@ -27,11 +26,7 @@ func New() *App {
 
 	var logger zap.SugaredLogger
 
-	if strings.Contains(strings.ToLower(cfg.AppEnv), "dev") {
-		logger = log.BuildDevLogger(cfg.AppLogPath)
-	} else {
-		logger = log.BuildProdLogger(cfg.AppLogPath)
-	}
+	logger = log.BuildMainLogger(cfg.AppLogPath)
 
 	db, err := connDb(cfg, logger)
 

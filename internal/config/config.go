@@ -7,7 +7,6 @@ import (
 )
 
 type Config struct {
-	AppPort            int    `mapstructure:"APP_PORT"`
 	AppName            string `mapstructure:"APP_NAME"`
 	AppEnv             string `mapstructure:"APP_ENV"`
 	AppLogPath         string `mapstructure:"APP_LOG_PATH"`
@@ -16,6 +15,10 @@ type Config struct {
 	DbName             string `mapstructure:"DB_NAME"`
 	DbUser             string `mapstructure:"DB_USER"`
 	DbPassword         string `mapstructure:"DB_PASSWORD"`
+	RabbitUser         string `mapstructure:"RABBIT_USER"`
+	RabbitPassword     string `mapstructure:"RABBIT_PASSWORD"`
+	RabbitHost         string `mapstructure:"RABBIT_HOST"`
+	RabbitPort         string `mapstructure:"RABBIT_PORT"`
 }
 
 func LoadConfig(paths ...string) *Config {
