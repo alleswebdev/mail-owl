@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/alleswebdev/mail-owl/cmd/sheduler/app"
+	"github.com/alleswebdev/mail-owl/internal/services/broker/rabbitmq"
 	"os"
 	"os/signal"
 	"syscall"
@@ -23,9 +24,11 @@ func main() {
 		errs <- fmt.Errorf("%s", <-c)
 	}()
 
-	go func() {
-		//
-	}()
+	err := app.Broker.Subscribe(rabbitmq.SchedulerQueue, app.SchedulerHandler)
+
+	if err != nil {
+		errs <- err
+	}
 
 	app.Logger.Fatalw("getting error on the errors channel", "err", <-errs)
 }
