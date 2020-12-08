@@ -3,7 +3,6 @@ package rabbitmq
 import (
 	"fmt"
 	"github.com/alleswebdev/mail-owl/internal/services/broker"
-	"github.com/sirupsen/logrus"
 	"github.com/streadway/amqp"
 )
 
@@ -28,6 +27,10 @@ func NewRabbit(uri string, exchange string, log broker.Logger) (*Rabbit, error) 
 		return nil, fmt.Errorf("open channel: %s", err)
 	}
 
+	go func() {
+		log.Fatalf("Mq connection was closed: %s", <-conn.NotifyClose(make(chan *amqp.Error)))
+	}()
+
 	return &Rabbit{Conn: conn, exchange: exchange, defaultCh: defaultCh, log: log}, nil
 }
 
@@ -38,16 +41,14 @@ func (c *Rabbit) NotifyClose(log broker.Logger) {
 	}()
 }
 
-func (c *Rabbit) Subscribe(event string, h broker.Handler) (*Consumer, error) {
+func (c *Rabbit) Subscribe(event string, h broker.Handler) error {
 	ch, err := c.Conn.Channel()
 
 	if nil != err {
-		return nil, err
+		return err
 	}
 
-	c.NotifyClose(c.log)
-
-	cs := Consumer{Ch: *ch, exchange: c.exchange}
+	cs := Consumer{Ch: ch, exchange: c.exchange}
 
 	cs.bindingKey = event
 
@@ -55,14 +56,16 @@ func (c *Rabbit) Subscribe(event string, h broker.Handler) (*Consumer, error) {
 	err = ch.Qos(5, 0, true)
 
 	if nil != err {
-		return nil, err
+		return err
 	}
 
-	err = cs.AnnounceQueue()
+	err, queue := AnnounceQueue(ch, cs.bindingKey, cs.exchange)
 
 	if nil != err {
-		return nil, err
+		return err
 	}
+
+	cs.Queue = *queue
 
 	events, err := cs.Ch.Consume(
 		cs.Queue.Name, // name
@@ -75,40 +78,40 @@ func (c *Rabbit) Subscribe(event string, h broker.Handler) (*Consumer, error) {
 	)
 
 	if err != nil {
-		return nil, fmt.Errorf("queue Consume: %s", err)
+		return fmt.Errorf("queue Consume: %s", err)
 	}
 
 	c.consumers = append(c.consumers, cs)
 
 	go func() {
 		for e := range events {
-			err = h(broker.Message{
+			isNack, err := h(broker.Message{
 				Body:    e.Body,
 				Headers: e.Headers,
 			})
 
 			if err != nil {
-				logrus.Errorf("msg handling error:%s", err)
-				err = e.Nack(false, true)
+				c.log.Errorf("msg handling error:%s", err)
+
+				if isNack {
+					err = e.Nack(false, true)
+					if err != nil {
+						c.log.Fatalf("msg nack error:%s", err)
+					}
+
+					continue
+				}
 			}
 
 			err = e.Ack(false)
 
 			if err != nil {
-				logrus.Fatalf("msg ack/nack error:%s", err)
+				c.log.Fatalf("msg ack error:%s", err)
 			}
 		}
 
 		defer ch.Close()
 	}()
-	return &cs, nil
-}
-
-func ProducerHandler(msg broker.Message) error {
-	fmt.Println(msg.Body)
-	fmt.Println(msg.Headers)
-	fmt.Println("Finish!")
-
 	return nil
 }
 
@@ -117,6 +120,16 @@ func (c *Rabbit) Publish(msg broker.Message, queue string) error {
 
 	if c.defaultCh == nil {
 		c.defaultCh, err = c.Conn.Channel()
+	}
+
+	if err != nil {
+		return err
+	}
+
+	err, _ = AnnounceQueue(c.defaultCh, queue, c.exchange)
+
+	if err != nil {
+		return err
 	}
 
 	err = c.defaultCh.Publish(

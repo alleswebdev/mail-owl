@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"github.com/alleswebdev/mail-owl/internal/config"
 	"github.com/alleswebdev/mail-owl/internal/log"
+	"github.com/alleswebdev/mail-owl/internal/services/broker"
+	"github.com/alleswebdev/mail-owl/internal/services/broker/rabbitmq"
 	"github.com/alleswebdev/mail-owl/internal/storage"
 	"github.com/jackc/pgx/v4/log/zapadapter"
 	"github.com/jackc/pgx/v4/pgxpool"
@@ -16,6 +18,7 @@ type App struct {
 	Config  config.Config
 	Logger  zap.SugaredLogger
 	Storage storage.DBStorage
+	Broker  broker.Broker
 }
 
 func New() *App {
@@ -37,10 +40,24 @@ func New() *App {
 		logger.Fatal(err)
 	}
 
+	uri := fmt.Sprintf("amqp://%s:%s@%s:%s",
+		cfg.RabbitUser,
+		cfg.RabbitPassword,
+		cfg.RabbitHost,
+		cfg.RabbitPort,
+	)
+
+	b, err := rabbitmq.NewRabbit(uri, "mailowl-default", &logger)
+
+	if err != nil {
+		logger.Fatal(err)
+	}
+
 	return &App{
 		Config:  *cfg,
 		Logger:  logger,
 		Storage: s,
+		Broker:  b,
 	}
 }
 

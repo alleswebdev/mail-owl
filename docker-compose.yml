@@ -16,15 +16,15 @@ services:
       POSTGRES_PASSWORD: password
       PGDATA: "/pg/data"
     command: ["postgres", "-c", "logging_collector=on", "-c", "log_directory=/var/log/postgresql", "-c", "log_filename=postgresql.log", "-c", "log_statement=all"]
-
-  rabbit:
-    build: ./build/rabbitmq
-    ports:
-      - 8083:15672
-      - 5672:5672
-    environment:
-      RABBITMQ_DEFAULT_USER: "rabbit"
-      RABBITMQ_DEFAULT_PASS: "rabbit"
+#
+#  rabbit:
+#    build: ./build/rabbitmq
+#    ports:
+#      - 8083:15672
+#      - 5672:5672
+#    environment:
+#      RABBITMQ_DEFAULT_USER: "rabbit"
+#      RABBITMQ_DEFAULT_PASS: "rabbit"
 
   redis:
     ports:

@@ -4,10 +4,6 @@ import (
 	"github.com/jackc/pgx/v4/pgxpool"
 )
 
-type Storage interface {
-	GetNoticeByHash(h string)
-}
-
 type DBStorage struct {
 	Db pgxpool.Pool
 }

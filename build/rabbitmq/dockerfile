@@ -2,3 +2,5 @@ FROM rabbitmq:3-management as main
 
 RUN rabbitmq-plugins enable --offline \
   rabbitmq_management
+
+EXPOSE 5672
