@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/alleswebdev/mail-owl/cmd/sheduler/app"
+	"github.com/alleswebdev/mail-owl/cmd/builder/app"
 	"github.com/alleswebdev/mail-owl/internal/services/broker/rabbitmq"
 	"os"
 	"os/signal"
@@ -11,10 +11,9 @@ import (
 
 func main() {
 	app := App.New()
-	defer app.Storage.Db.Close()
 	defer app.Logger.Sync()
 
-	app.Logger.Infof("Sheduler is running,: %#v", app.Config)
+	app.Logger.Infof("Bulder is running,: %#v", app.Config)
 
 	errs := make(chan error)
 
@@ -25,7 +24,7 @@ func main() {
 	}()
 
 	for i := 1; i < 6; i++ {
-		err := app.Broker.Subscribe(rabbitmq.SchedulerQueue, app.SchedulerHandler)
+		err := app.Broker.Subscribe(rabbitmq.BuilderQueue, app.BuilderHandler)
 
 		if err != nil {
 			errs <- err

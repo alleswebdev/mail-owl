@@ -115,24 +115,25 @@ func (c *Rabbit) Subscribe(event string, h broker.Handler) error {
 	return nil
 }
 
+// TO DO: вынести публикацию в отдельный канал app, добавить хендлеры, которые будут разбирать этот канал
 func (c *Rabbit) Publish(msg broker.Message, queue string) error {
 	var err error
 
-	if c.defaultCh == nil {
-		c.defaultCh, err = c.Conn.Channel()
-	}
+	// временный костыль от гонок при пуше с разных горутин
+	ch, err := c.Conn.Channel()
+	defer ch.Close()
 
 	if err != nil {
 		return err
 	}
 
-	err, _ = AnnounceQueue(c.defaultCh, queue, c.exchange)
+	err, _ = AnnounceQueue(ch, queue, c.exchange)
 
 	if err != nil {
 		return err
 	}
 
-	err = c.defaultCh.Publish(
+	err = ch.Publish(
 		c.exchange,
 		queue, // routing key
 		false, // mandatory

@@ -1,0 +1,161 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+ 
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>Тест email-уведомлений</title>
+  <style type="text/css">
+  body {margin: 0; padding: 0; min-width: 100%!important;}
+  img {height: auto;}
+  .content {width: 100%; max-width: 600px;}
+  .header {padding: 40px 30px 20px 30px;}
+  .innerpadding {padding: 30px 30px 30px 30px;}
+  .borderbottom {border-bottom: 1px solid #f2eeed;}
+  .subhead {font-size: 15px; color: #ffffff; font-family: sans-serif; letter-spacing: 10px;}
+  .h1, .h2, .bodycopy {color: #153643; font-family: sans-serif;}
+  .h1 {font-size: 33px; line-height: 38px; font-weight: bold;}
+  .h2 {padding: 0 0 15px 0; font-size: 24px; line-height: 28px; font-weight: bold;}
+  .bodycopy {font-size: 16px; line-height: 22px;}
+  .button {text-align: center; font-size: 18px; font-family: sans-serif; font-weight: bold; padding: 0 30px 0 30px;}
+  .button a {color: #ffffff; text-decoration: none;}
+  .footer {padding: 20px 30px 15px 30px;}
+  .footercopy {font-family: sans-serif; font-size: 14px; color: #ffffff;}
+  .footercopy a {color: #ffffff; text-decoration: underline;}
+
+  @media only screen and (max-width: 550px), screen and (max-device-width: 550px) {
+  body.hide {display: none!important;}
+  body.buttonwrapper {background-color: transparent!important;}
+  body.button {padding: 0px!important;}
+  body.button a {background-color: #e05443; padding: 15px 15px 13px!important;}
+  body.unsubscribe {display: block; margin-top: 20px; padding: 10px 50px; background: #2f3942; border-radius: 5px; text-decoration: none!important; font-weight: bold;}
+  }
+  </style>
+</head>
+
+<body  bgcolor="#f6f8f1">
+<table width="100%" bgcolor="#f6f8f1" border="0" cellpadding="0" cellspacing="0">
+<tr>
+  <td>
+    <!--[if (gte mso 9)|(IE)]>
+      <table width="600" align="center" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td>
+    <![endif]-->     
+    <table bgcolor="#ffffff" class="content" align="center" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td bgcolor="#c7d8a7" class="header">
+          <table width="70" align="left" border="0" cellpadding="0" cellspacing="0">  
+            <tr>
+              <td height="70" style="padding: 0 20px 20px 0;">
+                <img class="fix" src=" data:image/gif;base64,R0lGODlhRgBGAPcAAPpWWv///+Px/OpLT8fYp+tLT+xMT+1MUOfz/PT5/vb6/ulKTuvx4OXy/On0/fv9/+73/ehKTslFSPhVWey9vu5OUutMUPRSVvpZXf3+//T6/vf7/ueHd/VjYv/7/PpYXfL4/vlWWvmipPr8+PpYXMlGSO9OUt7ozPlwdPz+/+jv2s7GnMivje1NUf/7+/r8/uzSzP739/vY2fvc3fhbXcfQoulLT/75+clWU8fPofh1eNfjwPNRVc9GSfrT1Pz9//j7/vhydev1/e9laPvf3/dzd+yfpuVYV/pXWvBmaexNUPnP0PNSVu6fpfWfoe5jZu1PU9uAcPBoa+Pt+P76+ur0/epPUvve3+mXnvlvcvvd3u9rbeXs9vifovOTleuFiOtOUtxKTe9rb/L5/s/FnPmkpvTV2euWnedQUfimqPpaXuqgqPOUl8zDmu1RVNBVVOXL1fJXWfva2vvZ2vSXmetlavSlp/75+vXa3fh0d+iaofP5/uXQ2unv+O1OUu5iZepMUMh/bfRvdNBUUu5pbf729vWjpePs98h+bfipq/va2+5tcPrR0vX6/vWZm/vU1dGujehLTv77++xPUvb7/uTx/PhzdthHS+nR2v7+///8/PH4/vj8/vioqvTZ3fhUWNaxkMpFSOnt9uXu+ORKTu6IigAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH/C1hNUCBEYXRhWE1QPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4gPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS41LWMwMTQgNzkuMTUxNDgxLCAyMDEzLzAzLzEzLTEyOjA5OjE1ICAgICAgICAiPiA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPiA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ0MgKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MzM4QTMwMDM1MzIwMTFFM0E1RkNBMzY2RjNERDgyQjYiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MzM4QTMwMDQ1MzIwMTFFM0E1RkNBMzY2RjNERDgyQjYiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDozMzhBMzAwMTUzMjAxMUUzQTVGQ0EzNjZGM0REODJCNiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDozMzhBMzAwMjUzMjAxMUUzQTVGQ0EzNjZGM0REODJCNiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PgH//v38+/r5+Pf29fTz8vHw7+7t7Ovq6ejn5uXk4+Lh4N/e3dzb2tnY19bV1NPS0dDPzs3My8rJyMfGxcTDwsHAv769vLu6ubi3trW0s7KxsK+urayrqqmop6alpKOioaCfnp2cm5qZmJeWlZSTkpGQj46NjIuKiYiHhoWEg4KBgH9+fXx7enl4d3Z1dHNycXBvbm1sa2ppaGdmZWRjYmFgX15dXFtaWVhXVlVUU1JRUE9OTUxLSklIR0ZFRENCQUA/Pj08Ozo5ODc2NTQzMjEwLy4tLCsqKSgnJiUkIyIhIB8eHRwbGhkYFxYVFBMSERAPDg0MCwoJCAcGBQQDAgEAACH5BAAAAAAALAAAAABGAEYAAAj/AAkIFHhiRICDCBMqXMiwocOHAUacGEhR4A6IGDNqfLij4kAVG0OKxKjCo0AGI1OqRMjAJAGUK2OGbGkSpsybEGl6tImz50KdFXn6HBoAKEWhRHsaHYj0YIYHUKNKnTo1Q9KlJxm+qCSgq9evYMNuIIr1JcNGYdOqFQCCrMumAcZAmEu3rl27mzK5rZn06tu+e3cCHloW7uCUhQ8r/av4ZmKtCiJLnky5suXLlSlZ/WmyBgyGQNaKHk26qwOGMGpUZIGDAsMNpWPL7oqAIQUcLATmQFRCguvXCYILH068uPHjxTX8sC2hRKAcbyRI/904JgXpEgaFCDO9uszroS5F/wAAwE0P6gkzCEHAvr379/Djy4+/x3YPUgsWkAcQopSmhRrMJuBoDSzkwRc2DDCAfvsBoAMRCqVQxXwUVmghAm0lpMUiCnbYIHlqJOKBdxq5YIcVHXr4IXk6XEEiRDOIUUABKSq44n4YdDIiJ8j16OOPGqTggiFgzEhjjTc2mAceAzaZFiZbGGCAkUeqmCR5GKwxhZNOHqLHJFJOSWWKV35YhCeYpanmZWYQckCYUo5pZZlYpiHJYXc4AcUBfMIp5oxz0kmeJTMAJoMUfCbq55+BCgrAB0aM0sCklFZq6aWYcoGFH4l26qecjt4oCB9cggVHHZ2m+maYoIa64gdN9P/hwKy01mrrrQ6IckYLqqb6KaADuJpkEIqo9EgSvar665HCJolBGVSEFIMjvCbrK5xjNnslCnJo5MMQ1va6LI3aXomBCDc8FAMdShgQrrLYGhlsudvO0RAjT8D5rqfxAkpvmSSgm1AhbFhQwKL7LirvvP9emYUMBy3xB5UIW6vwwg3TSUIXXgAyAJUHL+ouvxcDm7Ggn1SgIMgit9yvyScLysORLLtcMrAMx1zmBCp/XLPNfy6cs85l8mCBzyCHfLPQQxN9Jc8rJy110kg6HSoTRyM9NdVVW+0o1B1uzTSZXrt6QdY1ylkj2WWHCvbacK/ddrNnx223jXMLO4EJd8NrzWDewtbdt4L5Aa7t3oPn97fhgaNdo+KFM354BZBXrrjk9F6woOX5jYd5uTxzHkEESHye+eajjx5JB6bTy3Pqox/BQev/XmBD6lGQQQPtrlcQARptEADK7ryXGwckA63AAevFh9oBBysIFBAAOw==" width="70" height="70" border="0" alt="" />
+              </td>
+            </tr>
+          </table>
+          <!--[if (gte mso 9)|(IE)]>
+            <table width="425" align="left" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td>
+          <![endif]-->
+          <table class="col425" align="left" border="0" cellpadding="0" cellspacing="0" style="width: 100%; max-width: 425px;">  
+            <tr>
+              <td height="70">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td class="subhead" style="padding: 0 0 0 3px;">
+                      Тестовое
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="h1" style="padding: 5px 0 0 0;">
+                      уведомление
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+          <!--[if (gte mso 9)|(IE)]>
+                </td>
+              </tr>
+          </table>
+          <![endif]-->
+        </td>
+      </tr>
+      <tr>
+        <td class="innerpadding borderbottom">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td class="h2">
+               Все работает!
+              </td>
+            </tr>
+            <tr>
+              <td class="bodycopy">
+                <span> Параметр name: {{.name}}</span>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td class="innerpadding borderbottom">
+          <table width="115" align="left" border="0" cellpadding="0" cellspacing="0">  
+            <tr>
+              <td height="115" style="padding: 0 20px 20px 0;">
+                <img class="fix" src=" data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHMAAABzCAMAAACcnc3UAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyNpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChNYWNpbnRvc2gpIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkNBODgyMzVFNTdGODExRTNBMkU2QkUxQkFFNURCMjk1IiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkNBODgyMzVGNTdGODExRTNBMkU2QkUxQkFFNURCMjk1Ij4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6REQyMjYzMDk1N0YxMTFFM0EyRTZCRTFCQUU1REIyOTUiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6REQyMjYzMEE1N0YxMTFFM0EyRTZCRTFCQUU1REIyOTUiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4Agz+YAAAC2VBMVEXj69P////6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" width="115" height="115" border="0" alt="" />
+              </td>
+            </tr>
+          </table>
+          <!--[if (gte mso 9)|(IE)]>
+            <table width="380" align="left" cellpadding="0" cellspacing="0" border="0">
+              <tr>
+                <td>
+          <![endif]-->
+          <table class="col380" align="left" border="0" cellpadding="0" cellspacing="0" style="width: 100%; max-width: 380px;">  
+            <tr>
+              <td>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td class="bodycopy">
+                      <p>Параметр text: {{.text}}</p>
+                    </td>
+                  </tr>
+                  <tr>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
+          <!--[if (gte mso 9)|(IE)]>
+                </td>
+              </tr>
+          </table>
+          <![endif]-->
+        </td>
+      </tr>
+      <tr>
+        <td class="footer" bgcolor="#44525f">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td align="center" class="footercopy">
+                &reg; Mail owl 2020<br/>
+              </td>
+            </tr>
+            <tr>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    <!--[if (gte mso 9)|(IE)]>
+          </td>
+        </tr>
+    </table>
+    <![endif]-->
+    </td>
+  </tr>
+</table>
+</body>
+</html>

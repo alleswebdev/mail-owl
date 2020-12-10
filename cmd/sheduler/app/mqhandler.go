@@ -11,7 +11,7 @@ func (app *App) SchedulerHandler(msg broker.Message) (bool, error) {
 	notice := models.SchedulerNotice{Raw: msg.Body, State: models.New}
 	err := notice.UnmarshalJSON(msg.Body)
 
-	app.Logger.Infof("received notice with state %d, id %d", notice.State, notice.Id)
+	app.Logger.Infof("received notice with state %s, id %d", notice.State, notice.Id)
 	if err != nil {
 		return false, err
 	}
@@ -34,6 +34,8 @@ func (app *App) HandleByState(notice models.SchedulerNotice) error {
 			return err
 		}
 
+		// вынести эту часть в отдельеую функцию
+		notice.State = models.Build
 		noticeEncode, err := notice.MarshalJSON()
 
 		if err != nil {

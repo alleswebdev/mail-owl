@@ -136,7 +136,7 @@ func easyjson45617aeeDecodeGithubComAlleswebdevMailOwlInternalModels(in *jlexer.
 				}
 				in.Delim(']')
 			}
-		case "Params":
+		case "params":
 			if in.IsNull() {
 				in.Skip()
 			} else {
@@ -160,6 +160,15 @@ func easyjson45617aeeDecodeGithubComAlleswebdevMailOwlInternalModels(in *jlexer.
 			}
 		case "Debug":
 			out.Debug = bool(in.Bool())
+		case "build":
+			if in.IsNull() {
+				in.Skip()
+				out.Build = nil
+			} else {
+				out.Build = in.Bytes()
+			}
+		case "state":
+			out.State = SchedulerState(in.String())
 		default:
 			in.SkipRecursive()
 		}
@@ -191,11 +200,11 @@ func easyjson45617aeeEncodeGithubComAlleswebdevMailOwlInternalModels(out *jwrite
 			out.RawString("null")
 		} else {
 			out.RawByte('[')
-			for v6, v7 := range in.To {
-				if v6 > 0 {
+			for v7, v8 := range in.To {
+				if v7 > 0 {
 					out.RawByte(',')
 				}
-				out.String(string(v7))
+				out.String(string(v8))
 			}
 			out.RawByte(']')
 		}
@@ -207,11 +216,11 @@ func easyjson45617aeeEncodeGithubComAlleswebdevMailOwlInternalModels(out *jwrite
 			out.RawString("null")
 		} else {
 			out.RawByte('[')
-			for v8, v9 := range in.Bcc {
-				if v8 > 0 {
+			for v9, v10 := range in.Bcc {
+				if v9 > 0 {
 					out.RawByte(',')
 				}
-				out.String(string(v9))
+				out.String(string(v10))
 			}
 			out.RawByte(']')
 		}
@@ -223,11 +232,11 @@ func easyjson45617aeeEncodeGithubComAlleswebdevMailOwlInternalModels(out *jwrite
 			out.RawString("null")
 		} else {
 			out.RawByte('[')
-			for v10, v11 := range in.Cc {
-				if v10 > 0 {
+			for v11, v12 := range in.Cc {
+				if v11 > 0 {
 					out.RawByte(',')
 				}
-				out.String(string(v11))
+				out.String(string(v12))
 			}
 			out.RawByte(']')
 		}
@@ -249,37 +258,37 @@ func easyjson45617aeeEncodeGithubComAlleswebdevMailOwlInternalModels(out *jwrite
 			out.RawString("null")
 		} else {
 			out.RawByte('[')
-			for v12, v13 := range in.Attachments {
-				if v12 > 0 {
+			for v13, v14 := range in.Attachments {
+				if v13 > 0 {
 					out.RawByte(',')
 				}
-				(v13).MarshalEasyJSON(out)
+				(v14).MarshalEasyJSON(out)
 			}
 			out.RawByte(']')
 		}
 	}
 	{
-		const prefix string = ",\"Params\":"
+		const prefix string = ",\"params\":"
 		out.RawString(prefix)
 		if in.Params == nil && (out.Flags&jwriter.NilMapAsEmpty) == 0 {
 			out.RawString(`null`)
 		} else {
 			out.RawByte('{')
-			v14First := true
-			for v14Name, v14Value := range in.Params {
-				if v14First {
-					v14First = false
+			v15First := true
+			for v15Name, v15Value := range in.Params {
+				if v15First {
+					v15First = false
 				} else {
 					out.RawByte(',')
 				}
-				out.String(string(v14Name))
+				out.String(string(v15Name))
 				out.RawByte(':')
-				if m, ok := v14Value.(easyjson.Marshaler); ok {
+				if m, ok := v15Value.(easyjson.Marshaler); ok {
 					m.MarshalEasyJSON(out)
-				} else if m, ok := v14Value.(json.Marshaler); ok {
+				} else if m, ok := v15Value.(json.Marshaler); ok {
 					out.Raw(m.MarshalJSON())
 				} else {
-					out.Raw(json.Marshal(v14Value))
+					out.Raw(json.Marshal(v15Value))
 				}
 			}
 			out.RawByte('}')
@@ -289,6 +298,16 @@ func easyjson45617aeeEncodeGithubComAlleswebdevMailOwlInternalModels(out *jwrite
 		const prefix string = ",\"Debug\":"
 		out.RawString(prefix)
 		out.Bool(bool(in.Debug))
+	}
+	{
+		const prefix string = ",\"build\":"
+		out.RawString(prefix)
+		out.Base64Bytes(in.Build)
+	}
+	{
+		const prefix string = ",\"state\":"
+		out.RawString(prefix)
+		out.String(string(in.State))
 	}
 	out.RawByte('}')
 }

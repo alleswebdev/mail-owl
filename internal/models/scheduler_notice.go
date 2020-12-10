@@ -9,23 +9,25 @@ type SchedulerState string
 
 const (
 	New     SchedulerState = "new"
+	Build                  = "build"
 	Builded                = "builded"
 	Error                  = "error"
 	Success                = "success"
 )
 
 type SchedulerNotice struct {
-	Id          int          `json:"id"`
-	Type        string       `json:"type"`
-	To          []string     `json:"to"`
-	Bcc         []string     `json:"bcc"`
-	Cc          []string     `json:"cc"`
-	Subject     string       `json:"subject"`
-	Template    string       `json:"template"`
-	Attachments []Attachment `json:"attachment"`
-	Params      map[string]interface{}
+	Id          int                    `json:"id"`
+	Type        string                 `json:"type"`
+	To          []string               `json:"to"`
+	Bcc         []string               `json:"bcc"`
+	Cc          []string               `json:"cc"`
+	Subject     string                 `json:"subject"`
+	Template    string                 `json:"template"`
+	Attachments []Attachment           `json:"attachment"`
+	Params      map[string]interface{} `json:"params"`
 	Debug       bool
 	Raw         []byte         `json:"-"`
+	Build       []byte         `json:"build"`
 	State       SchedulerState `json:"state"`
 }
 
