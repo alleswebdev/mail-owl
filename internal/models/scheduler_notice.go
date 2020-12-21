@@ -25,10 +25,11 @@ type SchedulerNotice struct {
 	Template    string                 `json:"template"`
 	Attachments []Attachment           `json:"attachment"`
 	Params      map[string]interface{} `json:"params"`
-	Debug       bool
-	Raw         []byte         `json:"-"`
-	Build       []byte         `json:"build"`
-	State       SchedulerState `json:"state"`
+	Debug       bool                   `json:"debug"`
+	Raw         []byte                 `json:"-"`
+	Build       []byte                 `json:"build"`
+	State       SchedulerState         `json:"state"`
+	Error       string                 `json:"error"`
 }
 
 type Attachment struct {
@@ -38,13 +39,24 @@ type Attachment struct {
 
 func (n *SchedulerNotice) Save(db storage.DBStorage) error {
 	var (
-		id int
+		id  int
+		err error = nil
 	)
 
-	err := db.Db.QueryRow(context.Background(), `INSERT INTO public.notifications(status, type, raw, created_at, debug)
+	if n.Id > 0 {
+		err = db.Db.QueryRow(context.Background(),
+			`UPDATE  public.notifications 
+				SET status = $1,
+					status_message = $2,
+					updated_at = now()
+				WHERE id = $3
+				RETURNING id
+			`, n.State, n.Error, n.Id).Scan(&id)
+	} else {
+		err = db.Db.QueryRow(context.Background(), `INSERT INTO public.notifications(status, type, raw, created_at, debug)
 			VALUES('new', $1, $2, now(), $3) RETURNING id`, n.Type, string(n.Raw), n.Debug).Scan(&id)
-
-	n.Id = id
+		n.Id = id
+	}
 
 	return err
 }

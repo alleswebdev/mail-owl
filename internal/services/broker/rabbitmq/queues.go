@@ -5,8 +5,12 @@ import (
 	"github.com/streadway/amqp"
 )
 
-const SchedulerQueue = "mailowl-scheduler"
-const BuilderQueue = "mailowl-builder"
+const (
+	SchedulerQueue string = "mailowl-scheduler"
+	BuilderQueue          = "mailowl-builder"
+	EmailQueue            = "mailowl-email"
+	SmsQueue              = "mailowl-sms"
+)
 
 // declare queue
 func AnnounceQueue(ch *amqp.Channel, name string, exchange string) (error, *amqp.Queue) {

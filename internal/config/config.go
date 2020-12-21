@@ -7,18 +7,22 @@ import (
 )
 
 type Config struct {
-	AppName            string `mapstructure:"APP_NAME"`
-	AppEnv             string `mapstructure:"APP_ENV"`
-	AppLogPath         string `mapstructure:"APP_LOG_PATH"`
-	DbHost             string `mapstructure:"DB_HOST"`
-	DbPort             string `mapstructure:"DB_PORT"`
-	DbName             string `mapstructure:"DB_NAME"`
-	DbUser             string `mapstructure:"DB_USER"`
-	DbPassword         string `mapstructure:"DB_PASSWORD"`
-	RabbitUser         string `mapstructure:"RABBIT_USER"`
-	RabbitPassword     string `mapstructure:"RABBIT_PASSWORD"`
-	RabbitHost         string `mapstructure:"RABBIT_HOST"`
-	RabbitPort         string `mapstructure:"RABBIT_PORT"`
+	AppName        string `mapstructure:"APP_NAME"`
+	AppEnv         string `mapstructure:"APP_ENV"`
+	AppLogPath     string `mapstructure:"APP_LOG_PATH"`
+	DbHost         string `mapstructure:"DB_HOST"`
+	DbPort         string `mapstructure:"DB_PORT"`
+	DbName         string `mapstructure:"DB_NAME"`
+	DbUser         string `mapstructure:"DB_USER"`
+	DbPassword     string `mapstructure:"DB_PASSWORD"`
+	RabbitUser     string `mapstructure:"RABBIT_USER"`
+	RabbitPassword string `mapstructure:"RABBIT_PASSWORD"`
+	RabbitHost     string `mapstructure:"RABBIT_HOST"`
+	RabbitPort     string `mapstructure:"RABBIT_PORT"`
+	EmailFrom      string `mapstructure:"EMAIL_FROM"`
+	SmtpPassword   string `mapstructure:"SMTP_PASSWORD"`
+	SmtpPort       int    `mapstructure:"SMTP_PORT"`
+	SmtpHost       string `mapstructure:"SMTP_HOST"`
 }
 
 func LoadConfig(paths ...string) *Config {

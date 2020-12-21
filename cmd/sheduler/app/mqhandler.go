@@ -12,6 +12,7 @@ func (app *App) SchedulerHandler(msg broker.Message) (bool, error) {
 	err := notice.UnmarshalJSON(msg.Body)
 
 	app.Logger.Infof("received notice with state %s, id %d", notice.State, notice.Id)
+
 	if err != nil {
 		return false, err
 	}
@@ -19,39 +20,40 @@ func (app *App) SchedulerHandler(msg broker.Message) (bool, error) {
 	err = app.HandleByState(notice)
 
 	if err != nil {
-		return true, err
+		return false, err
 	}
 
 	return false, nil
 }
 
 func (app *App) HandleByState(notice models.SchedulerNotice) error {
+	err := notice.Save(app.Storage)
+	if err != nil {
+		return err
+	}
+
 	switch notice.State {
 	case models.New:
-		err := notice.Save(app.Storage)
-
-		if err != nil {
-			return err
-		}
-
-		// вынести эту часть в отдельеую функцию
-		notice.State = models.Build
-		noticeEncode, err := notice.MarshalJSON()
-
-		if err != nil {
-			return err
-		}
-
-		err = app.Broker.Publish(broker.Message{
-			Body:    noticeEncode,
-			Headers: nil,
-		}, rabbitmq.BuilderQueue)
-
-		if err != nil {
-			return err
-		}
+		app.PublishState(PublishState{
+			Notice: notice,
+			State:  models.Build,
+			Queue:  rabbitmq.BuilderQueue,
+		})
 
 		app.Logger.Infof(" notice with id %d send to building", notice.Id)
+	case models.Builded:
+		queue := rabbitmq.EmailQueue
+		if notice.Type == "sms" {
+			queue = rabbitmq.SmsQueue
+		}
+
+		app.PublishState(PublishState{
+			Notice: notice,
+			State:  models.Builded,
+			Queue:  queue,
+		})
+
+		app.Logger.Infof(" notice with id %d send to sending", notice.Id)
 	}
 
 	return nil

@@ -158,7 +158,7 @@ func easyjson45617aeeDecodeGithubComAlleswebdevMailOwlInternalModels(in *jlexer.
 				}
 				in.Delim('}')
 			}
-		case "Debug":
+		case "debug":
 			out.Debug = bool(in.Bool())
 		case "build":
 			if in.IsNull() {
@@ -169,6 +169,8 @@ func easyjson45617aeeDecodeGithubComAlleswebdevMailOwlInternalModels(in *jlexer.
 			}
 		case "state":
 			out.State = SchedulerState(in.String())
+		case "error":
+			out.Error = string(in.String())
 		default:
 			in.SkipRecursive()
 		}
@@ -295,7 +297,7 @@ func easyjson45617aeeEncodeGithubComAlleswebdevMailOwlInternalModels(out *jwrite
 		}
 	}
 	{
-		const prefix string = ",\"Debug\":"
+		const prefix string = ",\"debug\":"
 		out.RawString(prefix)
 		out.Bool(bool(in.Debug))
 	}
@@ -308,6 +310,11 @@ func easyjson45617aeeEncodeGithubComAlleswebdevMailOwlInternalModels(out *jwrite
 		const prefix string = ",\"state\":"
 		out.RawString(prefix)
 		out.String(string(in.State))
+	}
+	{
+		const prefix string = ",\"error\":"
+		out.RawString(prefix)
+		out.String(string(in.Error))
 	}
 	out.RawByte('}')
 }

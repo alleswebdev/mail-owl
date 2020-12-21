@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"github.com/alleswebdev/mail-owl/internal/models"
 	"github.com/alleswebdev/mail-owl/internal/services/broker"
-	"github.com/alleswebdev/mail-owl/internal/services/broker/rabbitmq"
 	"html/template"
 )
 
@@ -23,32 +22,20 @@ func (app *App) BuilderHandler(msg broker.Message) (bool, error) {
 	tmpl, err := template.ParseFiles("internal/templates/" + notice.Template + ".html")
 
 	if err != nil {
+		app.PublishState(notice, models.Error, err)
 		return false, err
 	}
 
 	err = tmpl.Execute(&tpl, notice.Params)
 
 	if err != nil {
+		app.PublishState(notice, models.Error, err)
 		return false, err
 	}
 
 	notice.Build = tpl.Bytes()
 
-	notice.State = models.Builded
-	noticeEncode, err := notice.MarshalJSON()
-
-	if err != nil {
-		return false, err
-	}
-
-	err = app.Broker.Publish(broker.Message{
-		Body:    noticeEncode,
-		Headers: nil,
-	}, rabbitmq.SchedulerQueue)
-
-	if err != nil {
-		return false, err
-	}
+	app.PublishState(notice, models.Builded, nil)
 
 	app.Logger.Infof("notice with id %d builded and send to sheduler", notice.Id)
 

@@ -7,6 +7,7 @@ import (
 	"github.com/alleswebdev/mail-owl/internal/models"
 	"github.com/alleswebdev/mail-owl/internal/services/broker"
 	"github.com/alleswebdev/mail-owl/internal/services/broker/rabbitmq"
+	"github.com/alleswebdev/mail-owl/internal/services/mail"
 	"go.uber.org/zap"
 )
 
@@ -14,6 +15,7 @@ type App struct {
 	Config config.Config
 	Logger zap.SugaredLogger
 	Broker broker.Broker
+	Mailer mail.Mailer
 }
 
 func New() *App {
@@ -36,10 +38,13 @@ func New() *App {
 		logger.Fatal(err)
 	}
 
+	mailer := mail.NewMailer(*cfg)
+
 	return &App{
 		Config: *cfg,
 		Logger: logger,
 		Broker: b,
+		Mailer: *mailer,
 	}
 }
 

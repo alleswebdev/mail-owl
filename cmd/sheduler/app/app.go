@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/alleswebdev/mail-owl/internal/config"
 	"github.com/alleswebdev/mail-owl/internal/log"
+	"github.com/alleswebdev/mail-owl/internal/models"
 	"github.com/alleswebdev/mail-owl/internal/services/broker"
 	"github.com/alleswebdev/mail-owl/internal/services/broker/rabbitmq"
 	"github.com/alleswebdev/mail-owl/internal/storage"
@@ -86,4 +87,40 @@ func connDb(cfg *config.Config, logger zap.SugaredLogger) (*pgxpool.Pool, error)
 	}
 
 	return dbpool, nil
+}
+
+type PublishState struct {
+	Notice models.SchedulerNotice
+	State  models.SchedulerState
+	Error  error
+	Queue  string
+}
+
+func (app *App) PublishState(event PublishState) {
+	event.Notice.State = event.State
+
+	if event.Error != nil {
+		event.Notice.Error = event.Error.Error()
+	}
+
+	noticeEncode, err := event.Notice.MarshalJSON()
+
+	if err != nil {
+		app.Logger.Errorf("error on marshal json for id %d, state:%s, err: %s", event.Notice.Id, event.Notice.State, err)
+		return
+	}
+
+	if event.Queue == "" {
+		event.Queue = rabbitmq.SchedulerQueue
+	}
+
+	err = app.Broker.Publish(broker.Message{
+		Body:    noticeEncode,
+		Headers: nil,
+	}, event.Queue)
+
+	if err != nil {
+		app.Logger.Errorf("error on publish notice state for id %d, state:%s, err: %s", event.Notice.Id, event.Notice.State, err)
+		return
+	}
 }
