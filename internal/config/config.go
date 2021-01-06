@@ -23,6 +23,7 @@ type Config struct {
 	SmtpPassword   string `mapstructure:"SMTP_PASSWORD"`
 	SmtpPort       int    `mapstructure:"SMTP_PORT"`
 	SmtpHost       string `mapstructure:"SMTP_HOST"`
+	SmsApiId       string `mapstructure:"SMS_API_ID"`
 }
 
 func LoadConfig(paths ...string) *Config {
