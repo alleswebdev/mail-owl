@@ -30,8 +30,8 @@ func LoadConfig(paths ...string) *Config {
 	c := &Config{}
 	viper.SetConfigType("env")
 	viper.SetConfigName(".env")
-	viper.AddConfigPath("../..")
 	viper.AddConfigPath(".")
+	viper.AddConfigPath("../..")
 	viper.AddConfigPath("/var/external/env")
 
 	for _, val := range paths {

@@ -2,7 +2,7 @@ APPS = scheduler builder email-sender sms-sender
 RUN = $(APPS:=-run)
 JSON_MODELS = internal/models/scheduler_notice.go
 
-.PHONY: all clean $(APPS) stop build run migrate json
+.PHONY: all clean $(APPS) stop build run migrate json test
 
 all: build
 
@@ -25,3 +25,5 @@ migrate-init:
 			go run cmd/migrations/migrate.go init
 json:
 			easyjson -all $(JSON_MODELS)
+test:
+			go test -v ./...
