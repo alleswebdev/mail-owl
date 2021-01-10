@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/alleswebdev/mail-owl/cmd/sheduler/app"
+	"github.com/alleswebdev/mail-owl/cmd/scheduler/app"
 	"github.com/alleswebdev/mail-owl/internal/services/broker/rabbitmq"
 	"os"
 	"os/signal"
@@ -14,7 +14,7 @@ func main() {
 	defer app.Storage.Db.Close()
 	defer app.Logger.Sync()
 
-	app.Logger.Infof("Sheduler is running,: %#v", app.Config)
+	app.Logger.Infof("scheduler is running,: %#v", app.Config)
 
 	errs := make(chan error)
 

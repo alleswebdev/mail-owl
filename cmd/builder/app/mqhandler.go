@@ -37,7 +37,7 @@ func (app *App) BuilderHandler(msg broker.Message) (bool, error) {
 
 	app.PublishState(notice, models.Builded, nil)
 
-	app.Logger.Infof("notice with id %d builded and send to sheduler", notice.Id)
+	app.Logger.Infof("notice with id %d builded and send to scheduler", notice.Id)
 
 	return false, nil
 }
